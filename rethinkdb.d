@@ -8,9 +8,10 @@ class Rethinkdb {
 		Socket sock;
 	}
 	
-	public Connection connect(string host, ushort port, string db = "" , string auth_key = "", int timeout = 0) {
+	public Connection connect(string host, ushort port, string db = "" , string auth_key = "", int timeout = 20) {
 		Connection c;
 		c.sock = new Socket(AddressFamily.INET, SocketType.STREAM);
+		c.sock.setOption(SocketOptionLevel.SOCKET,SocketOption.RCVTIMEO,dur!"seconds"(timeout));
 		scope (exit) c.sock.close();
 		c.sock.connect(new InternetAddress(host,port));
 		c.sock.send("\x20\x2d\x0c\x40\x00\x00\x00\x00\xc7\x70\x69\x7e");
