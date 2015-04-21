@@ -21,4 +21,3 @@ class Rethinkdb {
 		return c;
 	}
 }
-
